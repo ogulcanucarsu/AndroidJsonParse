@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         rawJsonData = (Button)findViewById(R.id.btn_rawJsonData);
         JsonParseData=(Button)findViewById(R.id.btn_JsonParseData);
 
-        openScreen();
+        jsonParseData();
 
         JsonParseData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,42 +100,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void openScreen() {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        InputStream stream= getResources().openRawResource(R.raw.json_data);
-        try
-        {
-            byte buffer[]=new byte[stream.available()];
-            while (stream.read(buffer)!=-1);
-            String jsonData= new String(buffer);
-            JSONObject jsonObject = new JSONObject(jsonData);
-            JSONArray person=jsonObject.getJSONArray("Person");
-
-            for (int i =0; i<person.length();i++)
-            {
-                JSONObject object = person.getJSONObject(i);
-                String id = object.getString("id");
-                String name = object.getString("name");
-                String surname = object.getString("surname");
-
-                stringBuilder.append("ID : " + id + "\n" + "Name :" + name + "\n" + "Surname :" + surname + "\n");
-
-
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        tw.setText(stringBuilder);
-
-
-
-    }
 }
